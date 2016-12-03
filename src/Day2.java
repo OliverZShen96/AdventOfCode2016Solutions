@@ -25,26 +25,26 @@ public class Day2 {
 	public static void main (String[] args) throws IOException {
 		
 		// Read through input file
-		try (BufferedReader br = new BufferedReader(new FileReader("input.txt"))) {
-			String line;
-			String code1 = "";
-			String code2 = "";
-			while ((line = br.readLine()) != null) {
-				char[] steps = line.toCharArray();
-				
-				// iterate through each step for each part of the question
-				for (char c : steps) {
-					processMovement(c, 1);
-					processMovement(c, 2);
-				}
-				
-				// append the new step to the code
-				code1 = code1 + keypadNums[x1][y1];
-				code2 = code2 + keypadNums2[x2][y2];
+		BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+		String line;
+		String code1 = "";
+		String code2 = "";
+		while ((line = br.readLine()) != null) {
+			char[] steps = line.toCharArray();
+			
+			// iterate through each step for each part of the question
+			for (char c : steps) {
+				processMovement(c, 1);
+				processMovement(c, 2);
 			}
-			// print answers
-			System.out.println("answer to part 1 is : " + code1 + "\n" + "answer to part 2 is : " + code2);
+			
+			// append the new step to the code
+			code1 = code1 + keypadNums[x1][y1];
+			code2 = code2 + keypadNums2[x2][y2];
 		}
+		// print answers
+		System.out.println("answer to part 1 is : " + code1 + "\n" + "answer to part 2 is : " + code2);
+		br.close();
 	}
 	private static void processMovement(char step, int part) {
 
