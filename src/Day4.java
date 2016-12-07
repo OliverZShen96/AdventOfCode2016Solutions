@@ -1,14 +1,16 @@
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 public class Day4 {
+	private static BufferedReader br;
+
 	public static void main(String[] args) throws IOException {
-		// part 1
-		BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+		br = new BufferedReader(new FileReader("input.txt"));
 		String line = "";
 		int count = 0;
 		while ((line = br.readLine()) != null) {
@@ -17,7 +19,6 @@ public class Day4 {
 			String[] parts = line.split("-|\\[|\\]");
 			for (int i = 0; i < parts.length-2; i++) {
 				for (Character c : parts[i].toCharArray()) {
-					System.out.print(c);
 					if (!charCount.containsKey(c)) {
 						charCount.put(c, 1);
 					} else {
@@ -27,8 +28,19 @@ public class Day4 {
 			}
 			int sectionID = Integer.parseInt(parts[parts.length-2]);
 			String checkSum = parts[parts.length-1];
-			
-			System.out.println(charCount);
+
+			ArrayList<Entry> sortedPairs = new ArrayList<Entry>(charCount.entrySet());
+		    Collections.sort(sortedPairs, (e1, e2) -> ((Comparable)(e2).getValue()).compareTo((e1).getValue()));
+		    
+		    String correctChecksum = "";
+		    int i = 0;
+		    for (Entry<Character, Integer> o : sortedPairs) {
+		    	correctChecksum = correctChecksum + o.getKey();
+		    	i++;
+		    	if (i >= checkSum.length()) break;
+		    }
+		    if (correctChecksum.equals(checkSum)) count += sectionID;
 		}
+		System.out.println("Answer to part 1 is " + count);
 	}
 }
