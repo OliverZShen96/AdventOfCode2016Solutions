@@ -38,6 +38,7 @@ public class Day5 {
 			if (part1ans.length() >= 8 && !part2ans.matches(".*_.*")) break;
 			i++;
 		}
-		System.out.println(part1ans);
+		System.out.println("answer to part 1: " + part1ans);
+		System.out.println("answer to part 2: " + part2ans);
 	}
 }
