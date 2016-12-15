@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
@@ -37,7 +38,12 @@ public class Day4 {
 			String checkSum = parts[parts.length-1];
 
 			ArrayList<Entry> sortedPairs = new ArrayList<Entry>(charCount.entrySet());
-		    Collections.sort(sortedPairs, (e1, e2) -> ((Comparable)(e2).getValue()).compareTo((e1).getValue()));
+		    Collections.sort(sortedPairs, new Comparator<Entry>() {
+				@Override
+				public int compare(Entry e1, Entry e2) {
+					return ((Comparable)(e2).getValue()).compareTo((e1).getValue());
+				}
+			});
 		    
 		    String correctChecksum = "";
 		    int i = 0;
