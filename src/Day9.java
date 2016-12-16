@@ -1,9 +1,15 @@
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Day9 {
 	public static void main(String[] args) throws IOException {
+		part1();
+		part2();
+	}
+	
+	public static void part1() throws IOException {
 		FileWriter output = new FileWriter("output.txt");
 		Scanner s = new Scanner(new File("input.txt"));
 		s.useDelimiter("");
@@ -45,5 +51,41 @@ public class Day9 {
 			}
 		}
 		output.close();
+	}
+	
+	public static void part2() throws IOException {
+		File input = new File("input.txt");
+		Scanner s = new Scanner(input);
+		s.useDelimiter("");
+		
+		int[] charWeights = new int[(int) input.length()];
+		Arrays.fill(charWeights, 1);
+		long totalWeight = 0;
+		
+		for (int i = 0; i < charWeights.length; i++) {
+			char currentChar = s.next().charAt(0);
+			if (currentChar == '(') {
+				// find compression expression
+				String compressionExpression = "";
+				while (s.hasNext()) {
+					currentChar = s.next().charAt(0);
+					i++;
+					if (currentChar == ')') break;
+					compressionExpression = compressionExpression.concat(currentChar+"");
+				}
+				// separate expression into parameters n and m
+				String[] compressionParameters = compressionExpression.split("x");
+				int n = Integer.parseInt(compressionParameters[0]);
+				int m = Integer.parseInt(compressionParameters[1]);
+				
+				// Update character weights according to expression
+				for (int j = 0; j <= n; j++) {
+					charWeights[i+j] *= m;
+				}
+			} else {
+				totalWeight += charWeights[i];
+			}
+		}
+		System.out.println(totalWeight);
 	}
 }
